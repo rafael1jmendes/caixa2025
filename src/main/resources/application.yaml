@@ -1,0 +1,28 @@
+logging:
+  level:
+    org:
+      springframework:
+          web: INFO
+com:
+  zaxxer:
+    hikari:
+      HikariConfig: 'DEBUG'
+      nodeValue: TRACE
+server:
+error:
+  include-message: always
+servlet:
+  encoding:
+    charset: UTF-8
+    force-response: true
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/seubanco
+    username: caixa_adm
+    password: 162619
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
