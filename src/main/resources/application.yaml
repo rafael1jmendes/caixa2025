@@ -5,7 +5,7 @@ logging:
 
 
 server:
-  port: 8090
+  port: 5678
   error:
     include-message: always
   servlet:
