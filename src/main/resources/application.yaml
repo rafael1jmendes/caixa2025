@@ -1,22 +1,21 @@
 logging:
   level:
-    org:
-      springframework:
-          web: INFO
-com:
-  zaxxer:
-    hikari:
-      HikariConfig: 'DEBUG'
-      nodeValue: TRACE
+    org.springframework.web: INFO
+    com.zaxxer.hikari.HikariConfig: DEBUG
+    com.zaxxer.hikari: TRACE
+
 server:
-error:
-  include-message: always
-servlet:
-  encoding:
-    charset: UTF-8
-    force-response: true
+  port: 8090
+  error:
+    include-message: always
+  servlet:
+    encoding:
+      charset: UTF-8
+      force-response: true
+
 spring:
   datasource:
+    plataform: postgres
     url: jdbc:postgresql://localhost:5432/meu_banco
     username: caixa_adm
     password: 162619
@@ -24,5 +23,15 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     show-sql: true
+
+tomcat:
+  max-active: 50
+  max-idle: 8
+  min-idle: 1
+  initial-size: 1
+  test-on-borrow: true
+  validation-query: SELECT 1
+  remove-abandoned: true
+  remove-abandoned-timeout: 90

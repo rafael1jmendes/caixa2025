@@ -74,6 +74,16 @@
    			 <version>0.4</version>
 		</dependency>
 
+		<dependency>
+       			<groupId>org.postgresql</groupId>
+       			<artifactId>postgresql</artifactId>
+        		<version>42.2.5</version> <!-- Ou a versão mais recente -->
+   		</dependency>
+		<dependency>
+    			<groupId>org.apache.tomcat</groupId>
+    			<artifactId>tomcat-jdbc</artifactId>
+		</dependency>
+
 
 
 	</dependencies>
@@ -84,6 +94,13 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+
+			<plugin>
+   				 <groupId>org.apache.maven.plugins</groupId>
+   				 <artifactId>maven-surefire-plugin</artifactId>
+   				 <version>3.5.2</version>
+			</plugin>
+
 		</plugins>
 	</build>
 
