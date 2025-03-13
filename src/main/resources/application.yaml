@@ -1,8 +1,8 @@
 logging:
   level:
     org.springframework.web: INFO
-    com.zaxxer.hikari.HikariConfig: DEBUG
-    com.zaxxer.hikari: TRACE
+    org.apache.tomcat.jdbc.pool: DEBUG
+
 
 server:
   port: 8090
@@ -15,7 +15,7 @@ server:
 
 spring:
   datasource:
-    plataform: postgres
+    platform: postgres
     url: jdbc:postgresql://localhost:5432/meu_banco
     username: caixa_adm
     password: 162619
