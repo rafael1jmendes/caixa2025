@@ -49,8 +49,12 @@ public class TokenJwtService {
 
     // Valida um token JWT
     public boolean validarToken(String token, String username) {
-        final String tokenUsername = extrairUsername(token);
-        return (tokenUsername.equals(username) && !tokenExpirado(token));
+        try {
+            final String tokenUsername = extrairUsername(token);
+            return (tokenUsername.equals(username) && !tokenExpirado(token));
+        } catch (Exception e) {
+            return false; // Token inválido
+        }
     }
 
     // Extrai o username do token
@@ -71,12 +75,13 @@ public class TokenJwtService {
 
     // Extrai todos os claims do token
     private Claims extrairTodosClaims(String token) {
-        return Jwts.parser()
+        return Jwts.parserBuilder()
                    .setSigningKey(getSigningKey()) // Define a chave de assinatura
+                   .build()
                    .parseClaimsJws(token) // Faz o parsing do token
                    .getBody(); // Retorna os claims (informações) do token
     }
-    
+
     // Verifica se o token expirou
     private boolean tokenExpirado(String token) {
         return extrairExpiracao(token).before(new Date());

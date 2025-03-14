@@ -8,9 +8,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
-@Data                   // Gera getters, setters, toString, equals, hashCode
-@NoArgsConstructor      // Gera construtor sem argumentos
-@AllArgsConstructor     // Gera construtor com todos os argumentos
+@Data                   // Gera getters, setters, toString, equals, hashCode //
+@NoArgsConstructor      // Gera construtor sem argumentos // 
+@AllArgsConstructor     // Gera construtor com todos os argumentos // 
 @Entity
 public class Users {
     @Id

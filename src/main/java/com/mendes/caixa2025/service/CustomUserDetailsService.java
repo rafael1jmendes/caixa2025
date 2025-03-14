@@ -10,7 +10,7 @@ import com.mendes.caixa2025.repository.UsuarioRepository;
 import java.util.Collections;
 
 @Service
-@RequiredArgsConstructor // Gera um construtor com todos os campos finais
+@RequiredArgsConstructor // Gera um construtor com todos os campos finais//
 public class CustomUserDetailsService implements UserDetailsService {
 
     private final UsuarioRepository usuarioRepository;
@@ -21,11 +21,11 @@ public class CustomUserDetailsService implements UserDetailsService {
             .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado: " + username));
 
         return new org.springframework.security.core.userdetails.User(
-            usuario.getUsername(), // Usa getUsername()
-            usuario.getPassword(), // Usa getPassword()
-            usuario.isEnabled(),   // Usa isEnabled()
+            usuario.getUsername(), 
+            usuario.getPassword(), 
+            usuario.isEnabled(),   
             true, true, true,      // Account non-expired, credentials non-expired, account non-locked
-            Collections.emptyList() // Roles (autoridades)
+            Collections.emptyList()
         );
     }
 }
