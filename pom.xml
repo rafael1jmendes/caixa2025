@@ -78,6 +78,25 @@
             <version>1.18.32</version> 
             <scope>provided</scope>
         </dependency>
+
+        <!--Java JWT-->
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-api</artifactId>
+            <version>0.10.8</version>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-impl</artifactId>
+            <version>0.10.8</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt-jackson</artifactId>
+            <version>0.10.8</version>
+            <scope>runtime</scope>
+        </dependency>
     </dependencies>
 
     <build>
