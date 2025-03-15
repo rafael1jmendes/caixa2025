@@ -34,13 +34,13 @@ public class TokenJwtService {
     }
 
     // Cria o token JWT com os claims e o subject (username)
-    private String criarToken(Map<String, Object> claims, String subject) {
+    private String criarToken(Map<String, Object> claims, String username) {
         Date agora = new Date();
         Date expiracao = new Date(agora.getTime() + expiration);
 
         return Jwts.builder()
             .setClaims(claims) // Claims (informações adicionais)
-            .setSubject(subject) // Subject (normalmente o username)
+            .setSubject(username) // Subject (normalmente o username)
             .setIssuedAt(agora) // Data de criação
             .setExpiration(expiracao) // Data de expiração
             .signWith(getSigningKey(), SignatureAlgorithm.HS256) // Assinatura
