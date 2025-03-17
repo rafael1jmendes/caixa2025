@@ -1,11 +1,24 @@
 package com.mendes.caixa2025.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "users") // Nome da tabela no banco de dados
 public class Users {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String username;
     private String password;
     private boolean enabled;
 
-    // Construtor padrão
+    // Construtor padrão (obrigatório para o JPA)
     public Users() {
     }
 
@@ -17,8 +30,16 @@ public class Users {
     }
 
     // Getters e Setters
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getUsername() {
-        return this.username;
+        return username;
     }
 
     public void setUsername(String username) {
@@ -26,7 +47,7 @@ public class Users {
     }
 
     public String getPassword() {
-        return this.password;
+        return password;
     }
 
     public void setPassword(String password) {
@@ -34,7 +55,7 @@ public class Users {
     }
 
     public boolean isEnabled() {
-        return this.enabled;
+        return enabled;
     }
 
     public void setEnabled(boolean enabled) {
