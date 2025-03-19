@@ -36,6 +36,6 @@ tomcat:
   remove-abandoned: true
   remove-abandoned-timeout: 90
 
-  jwt:
+jwt:
   secret: "minhaChaveSecretaMuitoSegura1234567890" # Chave secreta para assinar o token
   expiration: 3600000 # Tempo de expiração do token em milissegundos (1 hora)
