@@ -16,24 +16,24 @@ public class Users implements UserDetails {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "nome", nullable = false, unique = true, length = 50)
-    private String nome; // Este campo será usado como "username"
+    @Column(name = "username", nullable = false, unique = true, length = 50)
+    private String username; // Campo para o username
 
-    @Column(name = "senha_hash", nullable = false)
-    private String senhaHash; // Este campo será usado como "password"
+    @Column(name = "password", nullable = false)
+    private String password; // Campo para a senha
 
-    @Column(name = "habilitado", nullable = false)
-    private boolean habilitado = true; // Campo para verificar se o usuário está habilitado
+    @Column(name = "enabled", nullable = false)
+    private boolean enabled = true; // Campo para verificar se o usuário está ativo
 
     // Construtor padrão (obrigatório para o JPA)
     public Users() {
     }
 
     // Construtor com todos os argumentos
-    public Users(String nome, String senhaHash, boolean habilitado) {
-        this.nome = nome;
-        this.senhaHash = senhaHash;
-        this.habilitado = habilitado;
+    public Users(String username, String password, boolean enabled) {
+        this.username = username;
+        this.password = password;
+        this.enabled = enabled;
     }
 
     // Getters e Setters
@@ -45,44 +45,34 @@ public class Users implements UserDetails {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public String getUsername() {
+        return username;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public String getSenhaHash() {
-        return senhaHash;
+    public String getPassword() {
+        return password;
     }
 
-    public void setSenhaHash(String senhaHash) {
-        this.senhaHash = senhaHash;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public boolean isHabilitado() {
-        return habilitado;
+    public boolean isEnabled() {
+        return enabled;
     }
 
-    public void setHabilitado(boolean habilitado) {
-        this.habilitado = habilitado;
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     // Métodos da interface UserDetails
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.emptyList(); // Retorna uma lista vazia de autoridades
-    }
-
-    @Override
-    public String getPassword() {
-        return this.senhaHash; // Retorna a senha do usuário
-    }
-
-    @Override
-    public String getUsername() {
-        return this.nome; // Retorna o nome do usuário como "username"
     }
 
     @Override
@@ -98,10 +88,5 @@ public class Users implements UserDetails {
     @Override
     public boolean isCredentialsNonExpired() {
         return true; // Define se as credenciais não expiraram
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return this.habilitado; // Retorna o status de habilitação do usuário
     }
 }

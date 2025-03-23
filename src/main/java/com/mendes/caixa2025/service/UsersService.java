@@ -1,16 +1,29 @@
 package com.mendes.caixa2025.service;
 
 import com.mendes.caixa2025.model.Users;
+import com.mendes.caixa2025.repository.UsuarioRepository;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UsersService {
 
-    public void criarUsuario(String username, String password) {
-        Users usuario = new Users();
-        usuario.setUsername(username); // Usa o método setUsername()
-        usuario.setPassword(password); // Usa o método setPassword()
-        usuario.setEnabled(true); // Usa o método setEnabled()
-        // Salve o usuário no banco de dados
+    private final UsuarioRepository usuarioRepository;
+
+    public UsersService(UsuarioRepository usuarioRepository) {
+        this.usuarioRepository = usuarioRepository;
+    }
+
+    public void enableUser(Long userId) {
+        Users user = usuarioRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+        user.setEnabled(true); // Habilita o usuário
+        usuarioRepository.save(user);
+    }
+
+    public void disableUser(Long userId) {
+        Users user = usuarioRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+        user.setEnabled(false); // Desabilita o usuário
+        usuarioRepository.save(user);
     }
 }
