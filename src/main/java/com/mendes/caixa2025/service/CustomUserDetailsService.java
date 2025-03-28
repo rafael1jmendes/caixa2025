@@ -24,4 +24,12 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         return usuario; // Retorna o usuário, que já implementa UserDetails
     }
+
+    public UserDetails loadUserByUsernameAndPassword(String username, String password) throws UsernameNotFoundException {
+        // Busca o usuário pelo username
+        Users usuario = usuarioRepository.findByUsernameAndPassword(username, password)
+                .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado: " + username));
+
+        return usuario; // Retorna o usuário, que já implementa UserDetails
+    }
 }
