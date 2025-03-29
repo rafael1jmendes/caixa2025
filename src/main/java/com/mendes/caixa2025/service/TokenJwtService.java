@@ -21,6 +21,10 @@ public class TokenJwtService {
 
     @Value("${jwt.expiration}") // Tempo de expiração do token em milissegundos (definido no application.yml)
     private long expiration;
+    
+    public long getExpirationTime() {
+        return this.expiration; // Retorna o valor em milissegundos
+    }
 
     // Gera uma chave secreta com base na string "secret"
     private SecretKey getSigningKey() {
@@ -86,4 +90,6 @@ public class TokenJwtService {
     private boolean tokenExpirado(String token) {
         return extrairExpiracao(token).before(new Date());
     }
+
+   
 }

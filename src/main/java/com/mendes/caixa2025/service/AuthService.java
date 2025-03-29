@@ -1,36 +1,66 @@
 package com.mendes.caixa2025.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.HashMap;
+import java.util.Map;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mendes.caixa2025.controller.ContaInativaException;
+import com.mendes.caixa2025.controller.CredenciaisInvalidasException;
+import com.mendes.caixa2025.controller.TokenGenerationException;
+import com.mendes.caixa2025.model.Users;
+import com.mendes.caixa2025.repository.UsuarioRepository;
 
 @Service
 public class AuthService {
 
+    private final UsuarioRepository usuarioRepository;
     private final TokenJwtService tokenJwtService;
-
-    public AuthService(TokenJwtService tokenJwtService) {
+    private final PasswordEncoder passwordEncoder;
+//CONSTUTORES//
+    public AuthService(UsuarioRepository usuarioRepository, TokenJwtService tokenJwtService,
+            PasswordEncoder passwordEncoder) {
+        this.usuarioRepository = usuarioRepository;
         this.tokenJwtService = tokenJwtService;
+        this.passwordEncoder = passwordEncoder;
+    }
+    //1- buscar usuario no banco
+    public String autenticar(String username, String password) {
+        Users usuario = usuarioRepository.findByUsername(username)
+            .orElseThrow(() -> new CredenciaisInvalidasException("Usuario não encontrado "));
+
+    //2- verifica a senha
+    if (!passwordEncoder.matches(password, usuario.getPassword())) {
+            throw new CredenciaisInvalidasException ("Senha incorreta");
+    }        
+
+    //3-verifica se a conta esta ativa
+    if (!usuario.isEnabled() ||
+        !usuario.isAccountNonExpired()||
+        !usuario.isAccountNonLocked() ||
+        !usuario.isCredentialsNonExpired()) {
+        throw new ContaInativaException("Conta desativada ou bloqueada");
     }
 
-    public String autenticar(String username, String password) {
-        // autenticação
-        if ("admin".equals(username) && "senha123".equals(password)) {
-            String token = tokenJwtService.gerarToken(username);
-            if (token == null) throw new RuntimeException("Erro ao gerar token");
-            ObjectMapper mapper = new ObjectMapper();
-            HashMap<String, Object> response = new HashMap<>();
-            response.put("access_token", token);
-            response.put("token_type", "Bearer");
-            try {
-                return mapper.writeValueAsString(response);
-            } catch (JsonProcessingException e) {
-                throw new RuntimeException("Erro ao converter token para JSON", e);
-            }
-        } else {
-            throw new RuntimeException("Credenciais inválidas");
+    //4-gera o token JWT
+    String token = tokenJwtService.gerarToken(usuario.getUsername());
+    
+    //5-Cria a resposta
+    return criarRespostaToken(token);
+}
+
+private String criarRespostaToken(String token) {
+    Map<String, Object> response = new HashMap<>();
+    response.put("access_token", token);
+    response.put("token_type", "Bearer");
+    response.put("expires_in", tokenJwtService.getExpirationTime() / 1000);
+
+    try{
+        return new ObjectMapper().writeValueAsString(response);
+    } catch (JsonProcessingException e){
+        throw new TokenGenerationException("Erro ao gerar resposta de autenticação", e);
         }
     }
 }
