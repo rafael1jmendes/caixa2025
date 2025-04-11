@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mendes.caixa2025.model.Caixa;
+import com.mendes.caixa2025.model.ConsultaCaixa;
 import com.mendes.caixa2025.service.CaixaService;
 
 @RestController
@@ -23,18 +23,18 @@ public class Controller {
     private CaixaService caixaService; 
 
     @GetMapping
-    public List<Caixa> listarTodos() {
+    public List<ConsultaCaixa> listarTodos() {
         return caixaService.listarTodos();
     }
          
     @PostMapping
-    public Caixa salvar(@RequestBody Caixa caixa){
+    public ConsultaCaixa salvar(@RequestBody ConsultaCaixa caixa){
         return caixaService.salvar(caixa);
     }
 
     @PutMapping("/{id}")
-    public Caixa atualizar(@PathVariable Long id, @RequestBody Caixa caixa) {
-        Caixa caixaExistente = caixaService.listarTodos().stream().filter
+    public ConsultaCaixa atualizar(@PathVariable Long id, @RequestBody ConsultaCaixa caixa) {
+        ConsultaCaixa caixaExistente = caixaService.listarTodos().stream().filter
                     (c-> c.getId().equals(id)).findFirst().orElseThrow();
         caixa.setId(caixaExistente.getId());
                 return caixaService.atualizar(caixa);
