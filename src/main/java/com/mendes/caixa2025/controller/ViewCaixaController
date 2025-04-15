@@ -23,9 +23,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/view/caixa")
 public class ViewCaixaController {
 
-    @Autowired
-    private ConsultaCaixaService caixaService;
-
     @GetMapping("/entradas/data/{dataConsulta}")
     public ResponseEntity<String> entradasCaixaPorData(@RequestParam String dataConsulta){
         //Exemplo cru rafa, depois tens de validar se dataConsulta é uma data válida.
