@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
   
 @RestController
 @RequestMapping("/api/view/caixa")
-public class ConsultaCaixaController {
+public class ViewCaixaController {
 
     @Autowired
     private ConsultaCaixaService caixaService;
