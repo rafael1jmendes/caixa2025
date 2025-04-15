@@ -8,6 +8,5 @@ import com.mendes.caixa2025.model.ViewFluxoCaixa;
 
 @Repository
 public interface ViewFluxoCaixaRepository extends JpaRepositoryExtension<ViewFluxoCaixa, Long>  {
-    @Query();
 
 }
