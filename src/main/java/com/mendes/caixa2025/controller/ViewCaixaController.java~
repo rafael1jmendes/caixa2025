@@ -1,0 +1,44 @@
+package com.mendes.caixa2025.controller;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+/*
+  Esta classe tem por definição devolver todas as consultas e apenas consultas do caixa.
+  Nenhuma outra ação (create, update, delete) exceto leitura deve ser implementada nesta classe.
+  
+  @Author: Wisley Lobo.
+  @Date: 15/04/2025 13:34:35 America/Fortaleza TimeZone.
+*/
+  
+@RestController
+@RequestMapping("/api/view/caixa")
+public class ViewCaixaController {
+
+    @GetMapping("/entradas/data/{dataConsulta}")
+    public ResponseEntity<String> entradasCaixaPorData(@RequestParam String dataConsulta){
+        //Exemplo cru rafa, depois tens de validar se dataConsulta é uma data válida.
+        if(dataConsulta == null || dataConsulta.trim().equals("")) {
+          throw new Exception("O parâmetro deste método deve ser informado corretamente.");
+        }
+        return ResponseEntity.ok("Devolver todas as entradas do dia [" + dataConsulta + "] ");
+    }
+  
+    @GetMapping("/saidas/data/{dataConsulta}")
+    public ResponseEntity<String> saidasCaixaPorData(@RequestParam String dataConsulta){
+        //Exemplo cru rafa, depois tens de validar se dataConsulta é uma data válida.
+        if(dataConsulta == null || dataConsulta.trim().equals("")) {
+          throw new Exception("O parâmetro deste método deve ser informado corretamente.");
+        }
+        return ResponseEntity.ok("Devolver todas as saídas do dia [" + dataConsulta + "] ");
+    }
+  
+}

@@ -1,0 +1,41 @@
+logging:
+  level:
+    org.springframework.web: INFO
+    org.apache.tomcat.jdbc.pool: DEBUG
+
+
+server:
+  port: 5678
+  error:
+    include-message: always
+  servlet:
+    encoding:
+      charset: UTF-8
+      force-response: true
+
+spring:
+  datasource:
+    platform: postgres
+    url: jdbc:postgresql://localhost:5432/meu_banco
+    username: postgres #caixa_adm
+    password: 162619
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: none
+    show-sql: true
+
+tomcat:
+  max-active: 50
+  max-idle: 8
+  min-idle: 1
+  initial-size: 1
+  test-on-borrow: true
+  validation-query: SELECT 1
+  remove-abandoned: true
+  remove-abandoned-timeout: 90
+
+jwt:
+  secret: "minhaChaveSecretaMuitoSegura1234567890" # Chave secreta para assinar o token
+  expiration: 3600000 # Tempo de expiração do token em milissegundos (1 hora)

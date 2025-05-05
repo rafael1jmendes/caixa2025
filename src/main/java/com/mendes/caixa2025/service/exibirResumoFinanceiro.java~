@@ -1,0 +1,31 @@
+package com.mendes.caixa2025.service;
+
+
+import static org.hibernate.id.PersistentIdentifierGenerator.SCHEMA;
+import static org.springframework.boot.web.servlet.server.Session.SessionTrackingMode.URL;
+import static sun.net.ftp.FtpDirEntry.Permission.USER;
+
+private static void exibirResumoFinanceiro() {
+    String sql = "SELECT " +
+            "SUM(CASE WHEN tipo_movimentacao = 1 OR tipo_movimentacao = 'ENTRADA' THEN valor ELSE 0 END) AS entradas, " +
+            "SUM(CASE WHEN tipo_movimentacao = 2 OR tipo_movimentacao = 'SAIDA' THEN valor ELSE 0 END) AS saidas " +
+            "FROM " + SCHEMA + ".movimentacoes";
+
+    try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+         Statement stmt = conn.createStatement();
+         ResultSet rs = stmt.executeQuery(sql)) {
+
+        if (rs.next()) {
+            double totalEntradas = rs.getDouble("entradas");
+            double totalSaidas = rs.getDouble("saidas");
+            double saldo = totalEntradas - totalSaidas;
+
+            System.out.println("\n--- RESUMO FINANCEIRO ---");
+            System.out.printf("Total de Entradas: R$ %.2f%n", totalEntradas);
+            System.out.printf("Total de Saídas: R$ %.2f%n", totalSaidas);
+            System.out.printf("Saldo Atual: R$ %.2f%n", saldo);
+        }
+    } catch (SQLException e) {
+        System.err.println("Erro ao gerar relatório: " + e.getMessage());
+    }
+}

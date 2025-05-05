@@ -1,0 +1,25 @@
+package com.mendes.caixa2025.controller;
+
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.mendes.caixa2025.model.LoginRequest;
+import com.mendes.caixa2025.service.AuthService;
+
+@RestController
+@RequestMapping("/auth")
+public class AutenticacaoController {
+
+    private final AuthService autenticacaoService;
+
+    public AutenticacaoController(AuthService autenticacaoService) {
+        this.autenticacaoService = autenticacaoService;
+    }
+
+    @PostMapping("/login")
+    public String login(@RequestBody LoginRequest loginRequest) {
+        return autenticacaoService.autnticar(loginRequest.getUsername(), loginRequest.getPassword());
+    }
+}
