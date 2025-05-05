@@ -27,7 +27,7 @@ public class ViewCaixaController {
     public ResponseEntity<String> entradasCaixaPorData(@RequestParam String dataConsulta){
         //Exemplo cru rafa, depois tens de validar se dataConsulta é uma data válida.
         if(dataConsulta == null || dataConsulta.trim().equals("")) {
-          throw new Exception("O parâmetro deste método deve ser informado corretamente.");
+          throw new RuntimeException("O parâmetro deste método deve ser informado corretamente.");
         }
         return ResponseEntity.ok("Devolver todas as entradas do dia [" + dataConsulta + "] ");
     }
@@ -36,7 +36,7 @@ public class ViewCaixaController {
     public ResponseEntity<String> saidasCaixaPorData(@RequestParam String dataConsulta){
         //Exemplo cru rafa, depois tens de validar se dataConsulta é uma data válida.
         if(dataConsulta == null || dataConsulta.trim().equals("")) {
-          throw new Exception("O parâmetro deste método deve ser informado corretamente.");
+          throw new RuntimeException("O parâmetro deste método deve ser informado corretamente.");
         }
         return ResponseEntity.ok("Devolver todas as saídas do dia [" + dataConsulta + "] ");
     }
