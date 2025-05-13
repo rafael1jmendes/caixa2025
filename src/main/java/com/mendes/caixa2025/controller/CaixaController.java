@@ -1,9 +1,7 @@
 package com.mendes.caixa2025.controller;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +10,7 @@ import com.mendes.caixa2025.service.ConsultaCaixaService;
 
 @RestController
 @RequestMapping("/api/caixa")
-public class ConsultaCaixaController {
+public class CaixaController {
 
     @Autowired
     private ConsultaCaixaService caixaService;

@@ -1,41 +1,51 @@
 logging:
   level:
     org.springframework.web: INFO
-    org.apache.tomcat.jdbc.pool: DEBUG
-
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    com.zaxxer.hikari: DEBUG
 
 server:
   port: 5678
   error:
     include-message: always
+    include-binding-errors: always
+    include-stacktrace: on_param
   servlet:
     encoding:
       charset: UTF-8
-      force-response: true
+      enabled: true
+      force: true
 
 spring:
   datasource:
-    platform: postgres
     url: jdbc:postgresql://localhost:5432/meu_banco
     username: caixa_adm
     password: 162619
-    driver-class-name: org.postgresql.Driver
+    hikari:
+      pool-name: SpringBootHikariCP
+      connection-timeout: 30000
+      maximum-pool-size: 20
+      minimum-idle: 5
+      idle-timeout: 600000
+      max-lifetime: 1800000
+      connection-test-query: SELECT 1
+      leak-detection-threshold: 60000
   jpa:
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
-      ddl-auto: none
+      ddl-auto: validate # Melhor que 'none' para produção
     show-sql: true
-
-tomcat:
-  max-active: 50
-  max-idle: 8
-  min-idle: 1
-  initial-size: 1
-  test-on-borrow: true
-  validation-query: SELECT 1
-  remove-abandoned: true
-  remove-abandoned-timeout: 90
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc:
+          lob:
+            non_contextual_creation: true
+      javax:
+        persistence:
+          validation:
+            mode: none
 
 jwt:
-  secret: "minhaChaveSecretaMuitoSegura1234567890" # Chave secreta para assinar o token
-  expiration: 3600000 # Tempo de expiração do token em milissegundos (1 hora)
+  secret: "minhaChueveSecretaMuitoSegura1234567890" # Armazene isso de forma segura!
+  expiration: 3600000 # 1 hora

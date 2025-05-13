@@ -17,7 +17,7 @@ spring:
   datasource:
     platform: postgres
     url: jdbc:postgresql://localhost:5432/meu_banco
-    username: postgres #caixa_adm
+    username: caixa_adm
     password: 162619
     driver-class-name: org.postgresql.Driver
   jpa:
