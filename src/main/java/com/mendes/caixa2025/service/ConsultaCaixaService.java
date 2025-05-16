@@ -21,63 +21,63 @@ public class ConsultaCaixaService {
     @Autowired
     private ViewFluxoCaixaRepository viewFluxoCaixaRepository;
 
-//    private double saldoAtual;
-//
-//    @Transactional
-//    public void abrirCaixa(double saldoInicial){
-//        this.saldoAtual = saldoInicial;
-//        registrarOperacao("Abertura de caixa", saldoInicial, TipoMovimento.ABERTURA)
-//    }
-//
-//    @Transactional
-//    public void registrarEntrada(double valor, String descricao){
-//        if (valor <= 0) {
-//            throw new IllegalArgumentException("VALOR DE ENTRADA DEVE SER POSITIVO");
-//        }
-//        this.saldoAtual += valor;
-//        registrarOperacao(descricao, valor, TipoMovimento.ENTRADA);
-//    }
-//
-//    @Transactional
-//    public void registrarSaida(double valor, String descricao){
-//        if(valor <= 0) {
-//            throw new IllegalArgumentException("VALOR DE SAIDA DEVE SER POSITIVO");
-//        }
-//        if (valor <=0) {
-//            throw new IllegalStateException("SALDO INSUFICIENTE");
-//        }
-//        this.saldoAtual -= valor;
-//        registrarOperacao(descricao, -valor, TipoMovimento.SAIDA);
-//    }
-//
-//    @Transactional
-//    public void fecharCaixa(){
-//        registrarOperacao("Fechamento de Caixa ", 0, TipoMovimento.FECHAMENTO);
-//    }
-//
-//    private void registrarOperacao (String descricao, double valor, TipoMovimento tipo) {
-//        ConsultaCaixa operacao = new ConsultaCaixa(
-//            LocalDateTime.now(),
-//            descricao,
-//            valor,
-//            this.saldoAtual,
-//            tipo
-//        );
-//
-//       operacao = viewFluxoCaixaRepository.save(operacao);
-//    }
-//    public double getSaldoAtual() {
-//        return saldoAtual;
-//    }
+    private double saldoAtual;
+
+    @Transactional
+    public void abrirCaixa(double saldoInicial){
+        this.saldoAtual = saldoInicial;
+        registrarOperacao("Abertura de caixa", saldoInicial, TipoMovimento.ABERTURA)
+    }
+
+    @Transactional
+    public void registrarEntrada(double valor, String descricao){
+        if (valor <= 0) {
+            throw new IllegalArgumentException("VALOR DE ENTRADA DEVE SER POSITIVO");
+        }
+        this.saldoAtual += valor;
+        registrarOperacao(descricao, valor, TipoMovimento.ENTRADA);
+    }
+
+    @Transactional
+    public void registrarSaida(double valor, String descricao){
+        if(valor <= 0) {
+            throw new IllegalArgumentException("VALOR DE SAIDA DEVE SER POSITIVO");
+        }
+        if (valor <=0) {
+            throw new IllegalStateException("SALDO INSUFICIENTE");
+        }
+        this.saldoAtual -= valor;
+        registrarOperacao(descricao, -valor, TipoMovimento.SAIDA);
+    }
+
+    @Transactional
+    public void fecharCaixa(){
+        registrarOperacao("Fechamento de Caixa ", 0, TipoMovimento.FECHAMENTO);
+    }
+
+    private void registrarOperacao (String descricao, double valor, TipoMovimento tipo) {
+        ConsultaCaixa operacao = new ConsultaCaixa(
+            LocalDateTime.now(),
+            descricao,
+            valor,
+            this.saldoAtual,
+            tipo
+        );
+
+       operacao = viewFluxoCaixaRepository.save(operacao);
+    }
+    public double getSaldoAtual() {
+        return saldoAtual;
+    }
     public List<ConsultaCaixaService> consultaHistorico(String data) {
         List<ViewFluxoCaixa> movimentoCaixa = viewFluxoCaixaRepository.dadosCaixa(data);
        System.out.println(movimentoCaixa.get(0).isValor());
         return null;
-//        return viewFluxoCaixaRepository.findByDataBetween(inicio, fim);
+        return viewFluxoCaixaRepository.findByDataBetween(inicio, fim);
     }
-//    public List<ConsultaCaixaService> buscarPorDescricao(String descricao){
-//        return viewFluxoCaixaRepository.findByDescricaoContainingIgnoreCase(descricao);
-//    }
+    public List<ConsultaCaixaService> buscarPorDescricao(String descricao){
+        return viewFluxoCaixaRepository.findByDescricaoContainingIgnoreCase(descricao);
+    }
 
 }
    

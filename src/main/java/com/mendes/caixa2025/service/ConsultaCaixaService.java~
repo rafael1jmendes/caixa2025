@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import com.mendes.caixa2025.helper.TipoMovimento;
 import com.mendes.caixa2025.model.ConsultaCaixa;
-import com.mendes.caixa2025.repository.ConsultaCaixaRepository;
 
 import jakarta.transaction.Transactional;
 

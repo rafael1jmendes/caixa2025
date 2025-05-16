@@ -52,24 +52,24 @@ public class CaixaController {
             }
 
     @GetMapping("/saldo")
-    public ResponseEntity<Double> consultarSaldo(){
+    public ResponseEntity<?> consultarSaldo(){
         return ResponseEntity.ok(caixaService.getSaldoAtual());
     }
 
     @GetMapping("/historico")
-    public ResponseEntity<List<ConsultaCaixaService>> consultarHistorico() {
-            @RequestParam (required = false) String data) {
-                if (data == null) {
+    public ResponseEntity<?> consultarHistorico(
+            @RequestParam (required = false) String data){
+            {
                     return ResponseEntity.ok(caixaService.consultaHistorico());
                 }
-                return ResponseEntity.ok(caixaService.consultaHistorico(data));
+                return ResponseEntity.ok(caixaService.consultaHistorico(data).toString());
         }
 
    @GetMapping("/buscar")
-   public ResponseEntity<List<ConsultaCaixaService>> buscarPorDescricao(
+   public ResponseEntity<?> buscarPorDescricao(
        @RequestParam String descricao) {
             return ResponseEntity.ok(caixaService.buscarPorDescricao(descricao));
         }
 
 
-    }
+
