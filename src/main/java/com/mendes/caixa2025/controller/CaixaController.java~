@@ -38,9 +38,9 @@ public class CaixaController {
          return ResponseEntity.ok("Entradas registrada com sucesso");
 
     @PostMapping("/saida")
-    public ResponseEntity<String> registrarSaida (
+    public ResponseEntity<String> registrarSaida; (
         @RequestParam double valor,
-        @RequestParam String descricao ) {
+        @RequestParam String descricao) {
           if (valor <= 0) {
               return ResponseEntity.badRequest().body("VALOR DE SAIDA DEVE SER POSITIVO");
           }
@@ -52,16 +52,13 @@ public class CaixaController {
             }
 
     @GetMapping("/saldo")
-    public ResponseEntity<?> consultarSaldo(){
+    public ResponseEntity<?> consultarSaldo;(){
         return ResponseEntity.ok(caixaService.getSaldoAtual());
     }
 
     @GetMapping("/historico")
     public ResponseEntity<?> consultarHistorico(
-            @RequestParam (required = false) String data)
-            {
-                    return ResponseEntity.ok(caixaService.consultaHistorico());
-                }
+            @RequestParam (required = false) String data){
                 return ResponseEntity.ok(caixaService.consultaHistorico(data).toString());
         }
 

@@ -6,26 +6,26 @@ import java.util.Set;
 @Entity
 @Table(name = "rules", schema = "caixa2025")
 public class Rule {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     @Column(nullable = false, unique = true)
     private String ruleName;
-    
+
     @Column(nullable = false)
     private String description;
-    
+
     @Column(nullable = false)
     private String entity;  // Ex: "Caixa", "Users"
-    
+
     @Column(nullable = false)
     private String operation; // Ex: "CREATE", "READ", "UPDATE", "DELETE"
-    
+
     @Column(nullable = false)
     private String condition; // Ex: "valor > 1000", "tipoMovimento = 'ENTRADA'"
-    
+
     @ManyToMany(mappedBy = "rules")
     private Set<Users> users;
 

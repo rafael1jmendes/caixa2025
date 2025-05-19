@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import com.mendes.caixa2025.model.ViewFluxoCaixa;
+import com.mendes.caixa2025.repository.CaixaRepository;
 import com.mendes.caixa2025.repository.ViewFluxoCaixaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,12 +22,15 @@ public class ConsultaCaixaService {
     @Autowired
     private ViewFluxoCaixaRepository viewFluxoCaixaRepository;
 
+    @Autowired
+    private CaixaRepository caixaRepository;
+
     private double saldoAtual;
 
     @Transactional
     public void abrirCaixa(double saldoInicial){
         this.saldoAtual = saldoInicial;
-        registrarOperacao("Abertura de caixa", saldoInicial, TipoMovimento.ABERTURA)
+        registrarOperacao("Abertura de caixa", saldoInicial, TipoMovimento.ABERTURA);
     }
 
     @Transactional
@@ -56,15 +60,8 @@ public class ConsultaCaixaService {
     }
 
     private void registrarOperacao (String descricao, double valor, TipoMovimento tipo) {
-        ConsultaCaixa operacao = new ConsultaCaixa(
-            LocalDateTime.now(),
-            descricao,
-            valor,
-            this.saldoAtual,
-            tipo
-        );
-
-       operacao = viewFluxoCaixaRepository.save(operacao);
+        ConsultaCaixa operacao = new ConsultaCaixa();
+       caixaRepository.save(operacao);
     }
     public double getSaldoAtual() {
         return saldoAtual;
@@ -72,8 +69,7 @@ public class ConsultaCaixaService {
     public List<ConsultaCaixaService> consultaHistorico(String data) {
         List<ViewFluxoCaixa> movimentoCaixa = viewFluxoCaixaRepository.dadosCaixa(data);
        System.out.println(movimentoCaixa.get(0).isValor());
-        return null;
-        return viewFluxoCaixaRepository.findByDataBetween(inicio, fim);
+        return viewFluxoCaixaRepository.findByDataBetween(data);
     }
     public List<ConsultaCaixaService> buscarPorDescricao(String descricao){
         return viewFluxoCaixaRepository.findByDescricaoContainingIgnoreCase(descricao);

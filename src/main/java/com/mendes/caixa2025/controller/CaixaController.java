@@ -16,60 +16,59 @@ public class CaixaController {
     private ConsultaCaixaService caixaService;
 
     @PostMapping("/abrir")
-    public ResponseEntity<String> abrirCaixa(@RequestParam double saldoInicial){
+    public ResponseEntity<String> abrirCaixa(@RequestParam double saldoInicial) {
         if (saldoInicial < 0) {
             return ResponseEntity.badRequest().body("O saldo inicial nao pode ser negativo");
         }
         caixaService.abrirCaixa(saldoInicial);
         return ResponseEntity.ok("Caixa aberto com saldo inicial: " + saldoInicial);
-   }
+    }
 
     @PostMapping("/entrada")
     public ResponseEntity<String> registrarEntrada(
-        @RequestParam double valor,
-        @RequestParam String descricao) {
-         if (valor <= 0) {
-             return ResponseEntity.badRequest().body("VALOR DE ENTRADA DEVE SER POSITIVO");
-         }
-         if (descricao == null || descricao.trim().equals("")) {
-             return ResponseEntity.badRequest().body("DESCRICAO DEVE SER PREENCHIDA");
-         }
-         caixaService.registrarEntrada(valor, descricao);
-         return ResponseEntity.ok("Entradas registrada com sucesso");
+            @RequestParam double valor,
+            @RequestParam String descricao) {
+        if (valor <= 0) {
+            return ResponseEntity.badRequest().body("VALOR DE ENTRADA DEVE SER POSITIVO");
+        }
+        if (descricao == null || descricao.trim().equals("")) {
+            return ResponseEntity.badRequest().body("DESCRICAO DEVE SER PREENCHIDA");
+        }
+        caixaService.registrarEntrada(valor, descricao);
+        return ResponseEntity.ok("Entradas registrada com sucesso");
+
+    }
 
     @PostMapping("/saida")
-    public ResponseEntity<String> registrarSaida (
-        @RequestParam double valor,
-        @RequestParam String descricao ) {
-          if (valor <= 0) {
-              return ResponseEntity.badRequest().body("VALOR DE SAIDA DEVE SER POSITIVO");
-          }
-          if (descricao == null || descricao.trim().equals("")) {
-              return ResponseEntity.badRequest().body("DESCRICAO DEVE SER PREENCHIDA");
-          }
-          caixaService.registrarSaida(valor, descricao);
-          return ResponseEntity.ok("Saidas registrada com sucesso");
-            }
+    public ResponseEntity<String> registrarSaida(
+            @RequestParam double valor,
+            @RequestParam String descricao) {
+        if (valor <= 0) {
+            return ResponseEntity.badRequest().body("VALOR DE SAIDA DEVE SER POSITIVO");
+        }
+        if (descricao == null || descricao.trim().equals("")) {
+            return ResponseEntity.badRequest().body("DESCRICAO DEVE SER PREENCHIDA");
+        }
+        caixaService.registrarSaida(valor, descricao);
+        return ResponseEntity.ok("Saidas registrada com sucesso");
+    }
 
     @GetMapping("/saldo")
-    public ResponseEntity<?> consultarSaldo(){
+    public ResponseEntity<?> consultarSaldo() {
         return ResponseEntity.ok(caixaService.getSaldoAtual());
     }
 
     @GetMapping("/historico")
     public ResponseEntity<?> consultarHistorico(
-            @RequestParam (required = false) String data){
-            {
-                    return ResponseEntity.ok(caixaService.consultaHistorico());
-                }
-                return ResponseEntity.ok(caixaService.consultaHistorico(data).toString());
-        }
+            @RequestParam(required = false) String data) {
+        return ResponseEntity.ok(caixaService.consultaHistorico(data).toString());
+    }
 
-   @GetMapping("/buscar")
-   public ResponseEntity<?> buscarPorDescricao(
-       @RequestParam String descricao) {
-            return ResponseEntity.ok(caixaService.buscarPorDescricao(descricao));
-        }
+    @GetMapping("/buscar")
+    public ResponseEntity<?> buscarPorDescricao(
+            @RequestParam String descricao) {
+        return ResponseEntity.ok(caixaService.buscarPorDescricao(descricao));
+    }
 
-
+}
 

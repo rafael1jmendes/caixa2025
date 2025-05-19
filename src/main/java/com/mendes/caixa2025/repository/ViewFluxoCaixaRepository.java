@@ -1,5 +1,6 @@
 package com.mendes.caixa2025.repository;
 
+import com.mendes.caixa2025.service.ConsultaCaixaService;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -15,4 +16,7 @@ public interface ViewFluxoCaixaRepository extends JpaRepository<ViewFluxoCaixa, 
                         + "v WHERE case when :parametroData is not null then v.data_movimentacao = :parametroData", nativeQuery = true)
     List<ViewFluxoCaixa> dadosCaixa(@Param("parametroData") String parametroData);
 
+    List<ConsultaCaixaService> findByDataBetween(String data);
+
+    List<ConsultaCaixaService> findByDescricaoContainingIgnoreCase(String descricao);
 }
